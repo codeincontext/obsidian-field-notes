@@ -1,8 +1,8 @@
 services:
   mias-guide:
     build:
-      # Replace <github-user> with your account. Pin to a branch, tag, or SHA via #ref.
-      context: https://github.com/<github-user>/mias-guide.git#main
+      # Pin to a branch, tag, or SHA via #ref.
+      context: https://github.com/codeincontext/mias-guide.git#main
       dockerfile: docker/Dockerfile
     container_name: mias-guide
     restart: unless-stopped
