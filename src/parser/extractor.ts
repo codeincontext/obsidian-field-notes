@@ -68,10 +68,11 @@ function findTaggedBlocks(
     if (hasTag(block.text, config.tag)) {
       const tags = extractTags(block.text);
       const prefix = `${config.tag}/`;
-      const categories = tags
+      const subCategories = tags
         .filter((t) => t.startsWith(prefix))
-        .map((t) => t.slice(prefix.length))
-        .filter((c) => config.categories.includes(c));
+        .map((t) => t.slice(prefix.length));
+
+      const categories = subCategories.filter((c) => config.categories.includes(c));
       const images = collectImages(block);
 
       entries.push({
@@ -101,4 +102,12 @@ export function extractEntries(
     entry.date = date;
   }
   return entries;
+}
+
+/** Returns true if the entry is in the locked category and should be hidden
+ * from the public site. The category is `config.lockedCategory ?? "locked"`. */
+export function isLocked(entry: Entry, config: Config): boolean {
+  const locked = config.lockedCategory ?? "locked";
+  const prefix = `${config.tag}/`;
+  return entry.tags.some((t) => t.startsWith(prefix) && t.slice(prefix.length) === locked);
 }

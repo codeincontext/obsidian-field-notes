@@ -1,7 +1,15 @@
 {
   "name": "field-notes-mia",
   "compatibility_date": "2025-01-01",
+  "main": "src/worker.ts",
+  "rules": [
+    { "type": "Text", "globs": ["**/*.html"], "fallthrough": true }
+  ],
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS"
   }
+  // HOME_IPS is set as a Worker secret/var, not committed.
+  // To set:  npx wrangler secret put HOME_IPS
+  //          (value is a comma-separated list of allowed client IPs)
 }

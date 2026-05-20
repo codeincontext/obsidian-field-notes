@@ -1,10 +1,10 @@
 services:
-  mias-guide:
+  field-notes-mia:
     build:
       # Pin to a branch, tag, or SHA via #ref.
       context: https://github.com/codeincontext/obsidian-field-notes.git#main
       dockerfile: docker/Dockerfile
-    container_name: mias-guide
+    container_name: field-notes-mia
     restart: unless-stopped
     environment:
       TZ: Europe/Paris
@@ -13,9 +13,7 @@ services:
     volumes:
       - vault:/vault
       - ob-config:/root/.config/obsidian-headless
-      - hash-cache:/app/dist
 
 volumes:
   vault:
   ob-config:
-  hash-cache:

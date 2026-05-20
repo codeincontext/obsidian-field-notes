@@ -1,9 +1,9 @@
 services:
-  mias-guide:
+  field-notes-mia:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    container_name: mias-guide
+    container_name: field-notes-mia
     restart: unless-stopped
     environment:
       TZ: Europe/Paris

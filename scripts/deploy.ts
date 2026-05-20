@@ -1,11 +1,10 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
 
-const DIST = "dist";
-const INDEX = join(DIST, "index.html");
-const HASH_FILE = join(DIST, ".last-deploy-hash");
+// Both HTMLs are bundled into the Worker, so the deploy hash combines them.
+const BUILT_FILES = ["built/public.html", "built/private.html"];
+const HASH_FILE = ".last-deploy-hash";
 
 function run(cmd: string, args: string[]): void {
   const res = spawnSync(cmd, args, { stdio: "inherit" });
@@ -14,19 +13,25 @@ function run(cmd: string, args: string[]): void {
   }
 }
 
-function hashFile(path: string): string {
-  return createHash("sha256").update(readFileSync(path)).digest("hex");
+function hashBuild(paths: string[]): string {
+  const h = createHash("sha256");
+  for (const p of paths) {
+    h.update(p).update("\0").update(readFileSync(p));
+  }
+  return h.digest("hex");
 }
 
 console.log("→ build");
 run("npm", ["run", "build"]);
 
-if (!existsSync(INDEX)) {
-  console.error(`! build did not produce ${INDEX}`);
-  process.exit(1);
+for (const p of BUILT_FILES) {
+  if (!existsSync(p)) {
+    console.error(`! build did not produce ${p}`);
+    process.exit(1);
+  }
 }
 
-const currentHash = hashFile(INDEX);
+const currentHash = hashBuild(BUILT_FILES);
 const lastHash = existsSync(HASH_FILE) ? readFileSync(HASH_FILE, "utf-8").trim() : "";
 
 if (currentHash === lastHash) {

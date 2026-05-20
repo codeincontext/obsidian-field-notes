@@ -1,7 +1,8 @@
 node_modules/
 dist/
-build/
+built/
 docker/.env
+.last-deploy-hash
 
 # macOS
 .DS_Store

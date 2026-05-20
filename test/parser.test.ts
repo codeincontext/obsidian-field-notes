@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { join } from "node:path";
 import { parseBlocks } from "../src/parser/block-parser.js";
-import { extractEntries } from "../src/parser/extractor.js";
+import { extractEntries, isLocked } from "../src/parser/extractor.js";
 import { scanJournals } from "../src/parser/scanner.js";
 import { readFile } from "node:fs/promises";
 import type { Config } from "../src/parser/types.js";
@@ -19,10 +19,10 @@ const config: Config = {
 describe("scanner", () => {
   it("finds journal files and parses dates", async () => {
     const journals = await scanJournals(FIXTURES);
-    expect(journals).toHaveLength(3);
+    expect(journals).toHaveLength(4);
     // Sorted newest first
     expect(journals[0].date.getFullYear()).toBe(2025);
-    expect(journals[0].date.getMonth()).toBe(7); // August (0-indexed)
+    expect(journals[0].date.getMonth()).toBe(8); // September (0-indexed)
   });
 });
 
@@ -112,5 +112,20 @@ describe("extractor", () => {
     const blocks = parseBlocks(content);
     const entries = extractEntries(blocks, new Date(), config);
     expect(entries).toHaveLength(0);
+  });
+
+  it("flags #fieldnotes/locked entries via isLocked()", async () => {
+    const content = await readFile(
+      join(FIXTURES, "journal", "2025-09-10.md"),
+      "utf-8",
+    );
+    const blocks = parseBlocks(content);
+    const entries = extractEntries(blocks, new Date(), config);
+    // Both entries are extracted; isLocked() tells them apart.
+    expect(entries).toHaveLength(2);
+    const lifeEntry = entries.find((e) => e.text.includes("soup with a knife"))!;
+    const lockedEntry = entries.find((e) => e.text.includes("should never be published"))!;
+    expect(isLocked(lifeEntry, config)).toBe(false);
+    expect(isLocked(lockedEntry, config)).toBe(true);
   });
 });
