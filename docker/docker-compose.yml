@@ -1,0 +1,21 @@
+services:
+  mias-guide:
+    build:
+      # Replace <github-user> with your account. Pin to a branch, tag, or SHA via #ref.
+      context: https://github.com/<github-user>/mias-guide.git#main
+      dockerfile: docker/Dockerfile
+    container_name: mias-guide
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Paris
+      CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+      VAULT_PATH: /vault
+    volumes:
+      - vault:/vault
+      - ob-config:/root/.config/obsidian-headless
+      - hash-cache:/app/dist
+
+volumes:
+  vault:
+  ob-config:
+  hash-cache:

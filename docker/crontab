@@ -1,0 +1,5 @@
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Daily at 09:00 (container TZ — set via TZ env in compose)
+0 9 * * * /usr/local/bin/deploy-once >> /var/log/cron.log 2>&1

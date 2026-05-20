@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #2c2c2c;
+  background: #faf8f5;
+  padding: 2rem 1rem;
+}
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 2.5rem;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
+
+header p {
+  color: #777;
+  font-size: 0.95rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.filters button {
+  background: #eee;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #555;
+  transition: background 0.15s, color 0.15s;
+}
+
+.filters button.active {
+  background: #2c2c2c;
+  color: #faf8f5;
+}
+
+.entry {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e8e4df;
+}
+
+.entry:last-child {
+  border-bottom: none;
+}
+
+.entry-date {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 0.3rem;
+}
+
+.entry-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.entry-text img {
+  max-width: 100%;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+.entry-children {
+  margin-top: 0.5rem;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.entry-children li {
+  margin-bottom: 0.25rem;
+}
+
+.entry-categories {
+  margin-top: 0.5rem;
+}
+
+.entry-categories span {
+  font-size: 0.75rem;
+  color: #888;
+  background: #f0ede8;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.75rem;
+  margin-right: 0.3rem;
+}
+
+.empty {
+  color: #999;
+  font-style: italic;
+  margin-top: 2rem;
+}

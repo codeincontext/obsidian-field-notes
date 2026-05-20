@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+docker/.env
+
+# macOS
+.DS_Store
+
+# Wrangler cache + local env
+.wrangler/
+.dev.vars
+
+# Claude Code per-developer settings
+.claude/
