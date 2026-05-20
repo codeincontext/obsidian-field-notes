@@ -2,9 +2,9 @@ import type { Config } from "./src/parser/types.js";
 
 const config: Config = {
   vaultPath: "~/Documents/obsidian-vault",
-  tag: "miablog",
+  tag: "fieldnotes",
   categories: ["cooking", "money", "life"],
-  siteName: "Mia’s Guide",
+  siteName: "Field Notes for Mia",
   outDir: "./dist",
 };
 

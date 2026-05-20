@@ -10,9 +10,9 @@ const FIXTURES = join(import.meta.dirname, "fixtures");
 
 const config: Config = {
   vaultPath: FIXTURES,
-  tag: "miablog",
+  tag: "fieldnotes",
   categories: ["cooking", "money", "life"],
-  siteName: "Mia's Guide",
+  siteName: "Field Notes for Mia",
   outDir: "./dist",
 };
 
@@ -34,7 +34,7 @@ describe("block-parser", () => {
     );
     const blocks = parseBlocks(content);
     // Should have the notes blocks (skipping ### headers)
-    const tagged = blocks.filter((b) => b.text.includes("#miablog/"));
+    const tagged = blocks.filter((b) => b.text.includes("#fieldnotes/"));
     expect(tagged).toHaveLength(2);
 
     // Second tagged block should have children
@@ -68,17 +68,17 @@ describe("extractor", () => {
     expect(entries[0].text).toBe(
       "Start saving early, even small amounts. Compound interest is magic.",
     );
-    expect(entries[0].tags).toContain("miablog/money");
+    expect(entries[0].tags).toContain("fieldnotes/money");
     expect(entries[0].categories).toContain("money");
 
     expect(entries[1].text).toBe(
       "Learn to say no. It's a complete sentence.",
     );
-    expect(entries[1].tags).toContain("miablog/life");
+    expect(entries[1].tags).toContain("fieldnotes/life");
     expect(entries[1].categories).toContain("life");
   });
 
-  it("strips #miablog tag but keeps content", async () => {
+  it("strips #fieldnotes tag but keeps content", async () => {
     const content = await readFile(
       join(FIXTURES, "journal", "2025-06-15.md"),
       "utf-8",
@@ -87,8 +87,7 @@ describe("extractor", () => {
     const entries = extractEntries(blocks, new Date(), config);
 
     expect(entries).toHaveLength(2);
-    expect(entries[0].text).not.toContain("#miablog");
-    expect(entries[0].text).not.toContain("miablog");
+    expect(entries[0].text).not.toContain("#fieldnotes");
     expect(entries[0].text).toContain("taste buds");
   });
 

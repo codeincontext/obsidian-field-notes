@@ -1,8 +1,10 @@
-# Mia's Guide
+# Field Notes for Mia
 
 ## What is this?
 
-A collection of notes, wisdom, and life lessons from dad to Mia. Things worth knowing about cooking, life skills, money, relationships, and whatever else comes up. Written in small pieces over time through daily journaling, published as a simple website.
+A commonplace book — short collected notes, advice, and observations from dad to Mia. Things worth knowing about cooking, money, life skills, relationships, and whatever else comes up. Written in small pieces over time through daily journaling, published as a simple website.
+
+The tool that builds it (`obsidian-field-notes`) is generic; any Obsidian user can use it to publish their own commonplace book. "Field Notes for Mia" is one instance.
 
 ## Motivation
 
@@ -14,12 +16,12 @@ A collection of notes, wisdom, and life lessons from dad to Mia. Things worth kn
 ## Decisions
 
 ### Name
-- **Site name:** Mia's Guide
-- **Tag:** `#miablog/<category>` (nested Obsidian hashtag — was `[[miablog]]` + `#category` in Logseq)
+- **Site name:** Field Notes for Mia
+- **Tag:** `#fieldnotes/<category>` (nested Obsidian hashtag — was `[[miablog]]` + `#category` in Logseq)
 
 ### Content model
-- Source: Obsidian daily journal entries tagged with `#miablog/<category>` (e.g. `#miablog/cooking`)
-- Bare `#miablog` (no category) is also accepted; the entry just has no category
+- Source: Obsidian daily journal entries tagged with `#fieldnotes/<category>` (e.g. `#fieldnotes/cooking`)
+- Bare `#fieldnotes` (no category) is also accepted; the entry just has no category
 - Each entry is a block (a bullet point / paragraph)
 - Optional topic tags alongside the main tag (e.g. `#cooking`, `#money`)
 - Topics are freeform — use whatever tags feel natural
@@ -30,7 +32,7 @@ A collection of notes, wisdom, and life lessons from dad to Mia. Things worth kn
 
 ### Example journal entry
 ```
-- Always taste as you cook, not just at the end. Your taste buds are the most important tool. #miablog/cooking
+- Always taste as you cook, not just at the end. Your taste buds are the most important tool. #fieldnotes/cooking
 ```
 
 ### Site
@@ -41,7 +43,7 @@ A collection of notes, wisdom, and life lessons from dad to Mia. Things worth kn
 - Private/unlocked version deferred to later
 
 ### Tech stack
-- **Parser:** TypeScript — reads Obsidian vault markdown, extracts blocks tagged with `#miablog`
+- **Parser:** TypeScript — reads Obsidian vault markdown, extracts blocks tagged with `#fieldnotes`
 - **Build:** Script that extracts tagged blocks → generates static HTML
 - **Hosting:** Cloudflare Pages (no custom domain initially, `*.pages.dev`)
 - **Vault sync:** Obsidian Sync (paid) handles Mac ↔ Android. Builds run locally against `~/Documents/obsidian-vault/`.
@@ -66,8 +68,8 @@ Switched from Logseq to Obsidian. Main driver: Logseq sync between Android and M
 - Obsidian Sync ($5/mo) — Mac ↔ Android
 
 ### Tag convention
-- `#miablog/<category>` — nested Obsidian hashtag (e.g. `#miablog/cooking`, `#miablog/money`)
-- Bare `#miablog` (no category) is accepted; entry just lacks a category
+- `#fieldnotes/<category>` — nested Obsidian hashtag (e.g. `#fieldnotes/cooking`, `#fieldnotes/money`)
+- Bare `#fieldnotes` (no category) is accepted; entry just lacks a category
 - Tag pane shows hierarchy: `miablog > cooking, money, life`
 
 ### Journal migration
@@ -78,12 +80,12 @@ Switched from Logseq to Obsidian. Main driver: Logseq sync between Android and M
   - Stripped `id::`/`collapsed::` block plumbing lines
   - Stripped `((uuid))` block reference tokens
 - First-section heading normalized: all `### Foo` section headers are now plain headings (no `- ` bullet prefix)
-- Zero `#miablog` entries existed at migration time, so no tag rewriting was needed
+- Zero `#fieldnotes` entries existed at migration time, so no tag rewriting was needed
 
 ### Parser changes
 - Reads from `<vaultPath>/journal/` (singular) instead of `<graphPath>/journals/` (plural)
 - Filename regex: `YYYY-MM-DD.md` instead of `yyyy_MM_dd.md`
-- Tag detection: matches `#miablog` or `#miablog/<category>`; category is extracted from the path after the slash
+- Tag detection: matches `#fieldnotes` or `#fieldnotes/<category>`; category is extracted from the path after the slash
 - Config field renamed `graphPath` → `vaultPath`
 
 Migration reference: https://msfjarvis.dev/posts/migrating-from-logseq-to-obsidian/

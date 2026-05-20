@@ -120,7 +120,7 @@ export async function generateHTML(
   <div class="container">
     <header>
       <h1>${config.siteName}</h1>
-      <p>Notes from dad</p>
+      <p>A <a href="https://en.wikipedia.org/wiki/Commonplace_book">commonplace book</a> of notes from dad — small bits of advice, recipes, and things worth knowing.</p>
     </header>
     ${filterButtons}
     <main>

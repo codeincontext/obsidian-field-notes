@@ -2,7 +2,7 @@ services:
   mias-guide:
     build:
       # Pin to a branch, tag, or SHA via #ref.
-      context: https://github.com/codeincontext/mias-guide.git#main
+      context: https://github.com/codeincontext/obsidian-field-notes.git#main
       dockerfile: docker/Dockerfile
     container_name: mias-guide
     restart: unless-stopped
