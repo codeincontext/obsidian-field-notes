@@ -1,9 +1,6 @@
 services:
   field-notes-mia:
-    build:
-      # Pin to a branch, tag, or SHA via #ref.
-      context: https://github.com/codeincontext/obsidian-field-notes.git#main
-      dockerfile: docker/Dockerfile
+    image: ghcr.io/codeincontext/obsidian-field-notes:latest
     container_name: field-notes-mia
     restart: unless-stopped
     environment:

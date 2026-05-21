@@ -5,20 +5,26 @@ home Docker host managed via Dockge.
 
 ## Two compose files
 
-- `docker-compose.yml` — primary. Build context is the GitHub repo URL. Use this
-  on the home server: only `docker-compose.yml` + `.env` need to live in
-  Dockge's stacks folder; the code is pulled from GitHub at build time.
-- `docker-compose.local.yml` — for local development. Build context is the
-  parent directory (`..`). Use this when iterating on the Dockerfile or
-  entrypoint without pushing to GitHub first.
+- `docker-compose.yml` — primary. References the image built by GitHub Actions
+  at `ghcr.io/codeincontext/obsidian-field-notes:latest`. Use this on the home
+  server: only `docker-compose.yml` + `.env` need to live in Dockge's stacks
+  folder. Updating is `docker compose pull && up -d` (or Dockge → Update).
+- `docker-compose.local.yml` — for local development. Builds from the parent
+  directory. Use when iterating on the Dockerfile or entrypoint without
+  pushing first.
 
 ## Prerequisites
 
 - Active Obsidian Sync subscription (same one used by your desktop/mobile clients)
 - Cloudflare Account API Token with **Workers Scripts: Edit** + **Account Settings: Read**.
   Create one at https://dash.cloudflare.com/<account-id>/api-tokens
-- The repo pushed to GitHub. Edit the `context:` URL in `docker-compose.yml` if
-  you've forked.
+- The image published by GitHub Actions on push to `main`. If you forked, edit
+  the `image:` field in `docker-compose.yml` and the workflow at
+  `.github/workflows/docker.yml`.
+- The `ghcr.io` package must be public for anonymous pulls. After the first
+  workflow run, go to https://github.com/codeincontext?tab=packages → the
+  package → Settings → Change visibility → Public. Otherwise the server needs
+  a `docker login ghcr.io` with a GitHub PAT.
 - Server's local time TZ — change `TZ:` in the compose file if needed (default
   `Europe/Paris`).
 
@@ -30,9 +36,9 @@ home Docker host managed via Dockge.
    ```
    CLOUDFLARE_API_TOKEN=...
    ```
-4. Build the image (clones the repo at this point):
+4. Pull the image:
    ```
-   docker compose build
+   docker compose pull
    ```
 5. Authenticate Obsidian Sync interactively, **before** starting the long-running container:
    ```
@@ -54,10 +60,11 @@ home Docker host managed via Dockge.
 
 ## Updating after a code change
 
-Push to GitHub, then on the server:
-```
-docker compose build --pull --no-cache && docker compose up -d
-```
+1. `git push origin main` from wherever you code
+2. Wait ~1-2 min for the GitHub Actions workflow to build and publish the new
+   image (check the Actions tab on the repo)
+3. In Dockge, click **Update** on the `field-notes-mia` stack (or
+   `docker compose pull && docker compose up -d` via SSH)
 
 ## Local development
 
