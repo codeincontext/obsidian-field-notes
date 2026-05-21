@@ -33,13 +33,13 @@ the journal's filename.
 This repo also contains the config for
 [Field Notes for Mia](https://field-notes-mia.codeincontext.workers.dev),
 the instance run by the author. See
-[`mias-guide.config.ts`](mias-guide.config.ts) for the config shape: vault
+[`config.ts`](config.ts) for the config shape: vault
 path, tag prefix, categories, site name.
 
 ## Setup
 
 - `npm install`
-- Edit `mias-guide.config.ts` to point at your vault and set your tag/categories
+- Edit `config.ts` to point at your vault and set your tag/categories
 - `npm run build` to generate `dist/index.html`
 - `npm run deploy` to publish to Cloudflare Workers (requires `wrangler` auth)
 

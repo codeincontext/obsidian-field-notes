@@ -9,5 +9,5 @@
     "outDir": "./build",
     "rootDir": "."
   },
-  "include": ["src/**/*", "mias-guide.config.ts", "test/**/*"]
+  "include": ["src/**/*", "config.ts", "test/**/*"]
 }

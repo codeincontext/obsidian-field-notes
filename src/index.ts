@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir } from "node:os";
-import config from "../mias-guide.config.js";
+import config from "../config.js";
 import { scanJournals } from "./parser/scanner.js";
 import { parseFile } from "./parser/block-parser.js";
 import { extractEntries, isLocked } from "./parser/extractor.js";
@@ -9,7 +9,7 @@ import { generateHTML } from "./generator/html.js";
 import { copyAssets } from "./generator/assets.js";
 import type { Entry } from "./parser/types.js";
 
-const vaultPath = (process.env.MIAS_GUIDE_VAULT_PATH ?? config.vaultPath).replace(/^~/, homedir());
+const vaultPath = (process.env.VAULT_PATH ?? config.vaultPath).replace(/^~/, homedir());
 
 // HTMLs go into `built/` and get bundled into the Worker — they are source,
 // not public assets. Only genuinely-public files (images, etc.) belong in
